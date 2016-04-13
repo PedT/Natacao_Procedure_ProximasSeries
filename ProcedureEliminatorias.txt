@@ -1,0 +1,40 @@
+CREATE OR REPLACE PROCEDURE proximas_eliminatorias
+	IS
+	raia_c NUMBER;
+	raia_d NUMBER;
+	iterador NUMBER;
+	BEGIN
+
+	raia_d := 4;
+	raia_c := 5;
+	iterador := 4;
+
+		FOR mcursor IN (SELECT nome_partic_pp FROM PARTICIPANTE_PROVA  )
+		LOOP
+		INSERT INTO SERIE_PARTICIPANTE
+		 (data_hora_sp, nome_partic_sp, raia)
+		SELECT (data_hora, mcursor.nome_partic_pp, iterador)
+		FROM SERIE S2
+		WHERE S2.tipo = 'E' AND S2.id_prova_sr = mcursor.id_prova_pp AND S2.total_partic <= 8
+		
+		IF iterador < 5 THEN
+			raia_d := raia_d - 1;
+			iterador := raia_c;
+			
+			IF raia_d = 0 THEN
+				raia_d := 4;
+			END IF;
+		ELSE
+			raia_c := raia_c + 1;
+			iterador := raia_d;
+			
+			IF raia_c = 9 THEN
+				raia_c = 5;
+			END IF;
+		END IF;
+		
+		
+		
+		END LOOP;
+
+END
