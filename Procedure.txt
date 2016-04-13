@@ -2,106 +2,50 @@
 
 CREATE OR REPLACE PROCEDURE proximas_series_semifinais
 	IS
+	raia_c NUMBER;
+	raia_d NUMBER;
+	iterador NUMBER;
+	maximo NUMBER;
 	BEGIN
-	INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '4'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = t3.MIN(t3.tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '5'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 2 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '3'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 3 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA'AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '6'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 4 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '2'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 5 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	
-			INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '7'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 6 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '1'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 7 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '8'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 8 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  
-	  
-	  
-	  INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '4'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 9 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '5'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 10 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL'  AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '3'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 11 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '6'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 12 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '2'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 13 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	
-			INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '7'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 14 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '1'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 15 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	  
-	  		INSERT INTO SERIE_PART
-	  (DataHoraSerie, NomeParticipante, raia)
-	  SELECT t1.*, t2.*, '8'
-	  FROM SERIE t1, PARTICIPANTE t2, SERIE_PART t3
-	  WHERE t3.tempo = (SELECT DISTINCT TOP 16 tempo FROM SERIE_PART ORDER BY tempo) AND t3.SERIE.tipo = 'ELIMINATORIA' AND t1.tipo = 'SEMIFINAL' AND t1 = t3.SERIE AND t2 = t3.PARTICIPANTE AND t1.PROVA.id_prova = t3.SERIE.PROVA.id_prova AND t3.tempo IS NOT NULL
-	
+
+	FOR prova_cursor IN (SELECT id_prova FROM PROVA ORDER BY id_prova)
+	raia_d := 4;
+	raia_c := 5;
+	iterador := 4;
+	maximo := 0;
+	LOOP
+		FOR mcursor IN (SELECT nome_partic_sp SERIE_PARTICIPANTE S1 WHERE S1.data_hora_sp.tipo = 'E' AND S1.data_hora_sp.id_prova_sr = prova_cursor.id_prova AND S1.tempo > 0 ORDER BY S1.tempo)
+		LOOP
+		INSERT INTO SERIE_PARTICIPANTE
+		 (data_hora_sp, nome_partic_sp, raia)
+		SELECT (data_hora, mcursor.nome_partic_sp, iterador)
+		FROM SERIE S2
+		WHERE S2.tipo = 'S' AND S2.id_prova_sr = mcursor.data_hora_sp.id_prova_sr AND S2.total_partic <= 8
+		
+		IF iterador < 5 THEN
+			raia_d := raia_d - 1;
+			iterador := raia_c;
+			
+			IF raia_d = 0 THEN
+				raia_d := 4;
+			END IF;
+		ELSE
+			raia_c := raia_c + 1;
+			iterador := raia_d;
+			
+			IF raia_c = 9 THEN
+				raia_c = 5;
+			END IF;
+		END IF;
+		
+		maximo := maximo + 1;
+		
+		IF maximo = 16 THEN
+			EXIT;
+		END IF;
+		
+		END LOOP;
+	END LOOP;
 	
 END
 	  
