@@ -1,6 +1,5 @@
-4, 5, 3, 6, 2, 7, 1, 8
-
-CREATE OR REPLACE PROCEDURE proximas_series_semifinais
+create or replace
+PROCEDURE proximas_series_semifinais
 	IS
 	raia_c NUMBER;
 	raia_d NUMBER;
@@ -9,18 +8,17 @@ CREATE OR REPLACE PROCEDURE proximas_series_semifinais
 	BEGIN
 
 	FOR prova_cursor IN (SELECT id_prova FROM PROVA ORDER BY id_prova)
-	raia_d := 4;
+	LOOP
+  raia_d := 4;
 	raia_c := 5;
 	iterador := 4;
 	maximo := 0;
-	LOOP
-		FOR mcursor IN (SELECT nome_partic_sp SERIE_PARTICIPANTE S1 WHERE S1.data_hora_sp.tipo = 'E' AND S1.data_hora_sp.id_prova_sr = prova_cursor.id_prova AND S1.tempo > 0 ORDER BY S1.tempo)
+		FOR mcursor IN (SELECT S1.nome_partic_sp, S1.data_hora_sp, S0.id_prova_sr FROM SERIE_PARTICIPANTE S1 INNER JOIN SERIE S0 on S0.data_hora = S1.data_hora_sp  WHERE S0.tipo = 'E' AND s0.id_prova_sr = prova_cursor.id_prova AND S1.tempo > 0 ORDER BY S1.tempo)
 		LOOP
-		INSERT INTO SERIE_PARTICIPANTE
-		 (data_hora_sp, nome_partic_sp, raia)
-		SELECT (data_hora, mcursor.nome_partic_sp, iterador)
+		INSERT INTO SERIE_PARTICIPANTE (data_hora_sp, nome_partic_sp, raia)
+		SELECT data_hora, mcursor.nome_partic_sp, iterador
 		FROM SERIE S2
-		WHERE S2.tipo = 'S' AND S2.id_prova_sr = mcursor.data_hora_sp.id_prova_sr AND S2.total_partic <= 8
+		WHERE S2.tipo = 'S' AND S2.id_prova_sr = mcursor.id_prova_sr AND S2.total_partic <= 8;
 		
 		IF iterador < 5 THEN
 			raia_d := raia_d - 1;
@@ -34,7 +32,7 @@ CREATE OR REPLACE PROCEDURE proximas_series_semifinais
 			iterador := raia_d;
 			
 			IF raia_c = 9 THEN
-				raia_c = 5;
+				raia_c := 5;
 			END IF;
 		END IF;
 		
@@ -46,7 +44,6 @@ CREATE OR REPLACE PROCEDURE proximas_series_semifinais
 		
 		END LOOP;
 	END LOOP;
-	
-END
-	  
-	
+  
+  END;
+  
