@@ -1,23 +1,25 @@
-create or replace
-PROCEDURE proximas_eliminatorias
+create or replace PROCEDURE proximas_eliminatorias
 	IS
 	check_prova NUMBER;
   check_prova_anterior NUMBER;
 	iterador NUMBER;
+  temp NUMBER;
 	BEGIN
-
-		FOR mcursor IN (SELECT nome_partic_pp, id_prova_pp FROM PARTICIPANTE_PROVA GROUP BY id_prova_pp )
+    check_prova_anterior := -1;
+    iterador := 1;
+		FOR mcursor IN (SELECT nome_partic_pp, id_prova_pp FROM PARTICIPANTE_PROVA ORDER BY id_prova_pp  )
 		LOOP
     
     check_prova := mcursor.id_prova_pp;
     IF check_prova != check_prova_anterior THEN
        iterador := 1;
+   
     END IF;
-	  
+
 		INSERT INTO SERIE_PARTICIPANTE (data_hora_sp, nome_partic_sp, raia)
 		SELECT S2.data_hora, mcursor.nome_partic_pp, iterador 
 		FROM SERIE S2
-		WHERE S2.tipo = 'E' AND S2.id_prova_sr = mcursor.id_prova_pp AND S2.total_partic <= 8;
+		WHERE S2.tipo = 'E' AND S2.id_prova_sr = mcursor.id_prova_pp AND S2.total_partic < 8 AND ROWNUM = 1;
 		
 		iterador := iterador + 1;
     
