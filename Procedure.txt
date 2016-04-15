@@ -1,5 +1,4 @@
-create or replace
-PROCEDURE proximas_series_semifinais
+create or replace PROCEDURE proximas_series_semifinais
 	IS
 	raia_c NUMBER;
 	raia_d NUMBER;
@@ -18,7 +17,7 @@ PROCEDURE proximas_series_semifinais
 		INSERT INTO SERIE_PARTICIPANTE (data_hora_sp, nome_partic_sp, raia)
 		SELECT data_hora, mcursor.nome_partic_sp, iterador
 		FROM SERIE S2
-		WHERE S2.tipo = 'S' AND S2.id_prova_sr = mcursor.id_prova_sr AND S2.total_partic <= 8;
+		WHERE S2.tipo = 'S' AND S2.id_prova_sr = mcursor.id_prova_sr AND S2.total_partic < 8 AND ROWNUM = 1;
 		
 		IF iterador < 5 THEN
 			raia_d := raia_d - 1;
@@ -46,4 +45,3 @@ PROCEDURE proximas_series_semifinais
 	END LOOP;
   
   END;
-  
